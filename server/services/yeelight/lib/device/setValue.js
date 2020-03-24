@@ -1,7 +1,6 @@
 const { DEVICE_FEATURE_TYPES } = require('../../../../utils/constants');
-
-const logger = require('../../../../utils/logger');
 const { NotFoundError } = require('../../../../utils/coreErrors');
+const logger = require('../../../../utils/logger');
 
 /**
  * @description Change value of a Yeelight device.

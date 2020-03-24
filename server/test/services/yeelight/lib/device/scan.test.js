@@ -52,7 +52,7 @@ describe('YeelightHandler - scan', () => {
     sinon.reset();
   });
 
-  it('should get 2 new unknown devices', async () => {
+  it('should found 3 devices, 2 of wich are new unknown devices and 1 is an unhandled model', async () => {
     const yeelightService = YeelightService(gladysWithoutDevices, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
     const result = await yeelightService.device.scan();
@@ -61,7 +61,7 @@ describe('YeelightHandler - scan', () => {
     assert.callCount(gladysWithoutDevices.device.create, 2);
     expect(Object.keys(yeelightService.device.devices).length).to.eq(2);
   });
-  it('should get 2 new unknown devices, 1 of wich is already in Gladys', async () => {
+  it('should found 3 devices, 1 of wich is a new unknown device, 1 is already in Gladys and 1 is an unhandled model', async () => {
     const yeelightService = YeelightService(gladysWithOneDevice, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
     const result = await yeelightService.device.scan();
@@ -70,7 +70,7 @@ describe('YeelightHandler - scan', () => {
     assert.callCount(gladysWithoutDevices.device.create, 1);
     expect(Object.keys(yeelightService.device.devices).length).to.eq(2);
   });
-  it('should get 2 new unknown devices, 2 of wich are already in Gladys', async () => {
+  it('should found 3 devices, 2 of wich are already in Gladys and 1 is an unhandled model', async () => {
     const yeelightService = YeelightService(gladysWithTwoDevices, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
     const result = await yeelightService.device.scan();

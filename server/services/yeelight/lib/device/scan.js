@@ -44,11 +44,12 @@ async function scan() {
           logger.debug(`Device "${discoveredDevice.id}" is now mapped with the service !`);
         }
       } else {
-        unknownDevices.push(discoveredDevice);
         logger.debug(`Device "${discoveredDevice.id}" found, model: "${discoveredDevice.model}"`);
 
         if (Object.keys(DEVICES_MODELS).includes(discoveredDevice.model)) {
           // ...else, if the model is supported...
+          unknownDevices.push(discoveredDevice);
+
           let newDevice;
           if (discoveredDevice.capabilities.includes('set_rgb') && discoveredDevice.capabilities.includes('set_hsv')) {
             // ...and has color ability, create a color light device...

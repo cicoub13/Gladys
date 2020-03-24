@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const yeelightColor = require('./yeelight-color.json');
 const yeelightWhite = require('./yeelight-white.json');
+const yeelightUnhandled = require('./yeelight-unhandled.json');
 
 const DevicePropery = {
   POWER: 'power',
@@ -27,7 +28,7 @@ const DevicePropery = {
   NL_BR: 'nl_br',
   ACTIVE_MODE: 'active_mode',
 };
-const devices = [yeelightColor, yeelightWhite];
+const devices = [yeelightColor, yeelightWhite, yeelightUnhandled];
 
 class Discover {
   start() {

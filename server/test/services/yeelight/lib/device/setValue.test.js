@@ -41,6 +41,16 @@ describe('YeelightHandler - setValue', () => {
       90,
     );
   });
+  it('should do nothing because of the feature type is not handled yet', async () => {
+    await yeelightService.device.setValue(
+      {
+        external_id: 'yeelight:0x00000000035ac142',
+        features: [{ category: 'light', type: 'binary' }, { category: 'light', type: 'brightness' }],
+      },
+      { category: 'light', type: 'not_handled' },
+      90,
+    );
+  });
   it('should return Yeelight device not found error', async () => {
     const promise = yeelightService.device.setValue(
       {
