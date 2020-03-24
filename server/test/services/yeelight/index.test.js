@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const { fake } = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 const YeelightApi = require('./yeelight.mock.test');
@@ -14,6 +15,11 @@ const gladys = {
 describe('YeelightService', () => {
   const yeelightService = YeelightService(gladys, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
+  it('should have controllers', () => {
+    expect(yeelightService)
+      .to.have.property('controllers')
+      .and.be.instanceOf(Object);
+  });
   it('should start service', async () => {
     await yeelightService.start();
   });

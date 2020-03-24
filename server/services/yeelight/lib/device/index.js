@@ -1,3 +1,8 @@
+const { getDevices } = require('./getDevices');
+const { poll } = require('./poll');
+const { scan } = require('./scan');
+const { setValue } = require('./setValue');
+
 /**
  * @description Add ability to control a Yeelight device
  * @param {Object} gladys - Gladys instance.
@@ -10,6 +15,14 @@ const YeelightHandler = function YeelightHandler(gladys, yeelightApi, serviceId)
   this.gladys = gladys;
   this.yeelightApi = yeelightApi;
   this.serviceId = serviceId;
+
+  this.devices = {};
+  this.deviceAddressById = new Map();
 };
+
+YeelightHandler.prototype.getDevices = getDevices;
+YeelightHandler.prototype.poll = poll;
+YeelightHandler.prototype.scan = scan;
+YeelightHandler.prototype.setValue = setValue;
 
 module.exports = YeelightHandler;

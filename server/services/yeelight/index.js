@@ -1,5 +1,6 @@
 const logger = require('../../utils/logger');
 const YeelightHandler = require('./lib/device');
+const YeelightController = require('./api/yeelight.controller');
 
 module.exports = function YeelightService(gladys, serviceId) {
   // require the yeelight-awesome module
@@ -14,6 +15,7 @@ module.exports = function YeelightService(gladys, serviceId) {
    */
   function start() {
     logger.log('starting Yeelight service');
+    yeelightHandler.scan();
   }
 
   /**
@@ -30,5 +32,6 @@ module.exports = function YeelightService(gladys, serviceId) {
     start,
     stop,
     device: yeelightHandler,
+    controllers: YeelightController(yeelightHandler),
   });
 };
