@@ -1,9 +1,7 @@
 const { assert, fake } = require('sinon');
 const YeelightControllers = require('../../../../services/yeelight/api/yeelight.controller');
 
-const devices = [
-  { name: 'Yeelight 1' },
-];
+const devices = [{ name: 'Yeelight 1' }];
 const result = 'FOUND DEVICES WHILE SCANNING';
 
 const yeelightService = {

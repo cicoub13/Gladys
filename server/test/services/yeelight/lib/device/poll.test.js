@@ -32,19 +32,13 @@ describe('YeelightHandler - poll', () => {
   it('should poll device states', async () => {
     await yeelightService.device.poll({
       external_id: 'yeelight:0x00000000035ac142',
-      features: [
-        { category: 'light', type: 'binary' },
-        { category: 'light', type: 'brightness' },
-      ],
+      features: [{ category: 'light', type: 'binary' }, { category: 'light', type: 'brightness' }],
     });
   });
   it('should return Yeelight devices not found error', async () => {
     const promise = yeelightService.device.poll({
       external_id: 'yeelight:0x0000000000000000',
-      features: [
-        { category: 'light', type: 'binary' },
-        { category: 'light', type: 'brightness' },
-      ],
+      features: [{ category: 'light', type: 'binary' }, { category: 'light', type: 'brightness' }],
     });
     return assert.isRejected(promise, 'YEELIGHT_DEVICE_NOT_FOUND');
   });

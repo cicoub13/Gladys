@@ -20,9 +20,10 @@ function emitNewState(gladys, device, featureType, currentValue) {
     logger.debug(`Polling device ${deviceId}, ${featureType} change: ${feature.last_value} => ${currentValue}`);
 
     const deviceFeatureExternalId = `${device.external_id}:${featureType}`;
-    gladys.event.emit(EVENTS.DEVICE.NEW_STATE,
-      { device_feature_external_id: deviceFeatureExternalId, state: currentValue },
-    );
+    gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
+      device_feature_external_id: deviceFeatureExternalId,
+      state: currentValue,
+    });
   }
 }
 

@@ -64,9 +64,9 @@ class Yeelight {
     this.test = 1; // useless, this is just for eslint
     return Promise.resolve({
       action: 'set_power',
-      command: { id: 1, method: 'set_power', params: [(turnOn ? 'on' : 'off'), effect, duration] },
+      command: { id: 1, method: 'set_power', params: [turnOn ? 'on' : 'off', effect, duration] },
       result: { id: 1, result: ['ok'] },
-      success: true
+      success: true,
     });
   }
 
@@ -76,7 +76,7 @@ class Yeelight {
       action: 'set_bright',
       command: { id: 1, method: 'set_bright', params: [brightness, effect, duration] },
       result: { id: 1, result: ['ok'] },
-      success: true
+      success: true,
     });
   }
 
@@ -86,7 +86,7 @@ class Yeelight {
       action: 'get_prop',
       command: { id: 1, method: 'get_prop', params },
       result: { id: 1, result: this.getPropsByParams(params) },
-      success: true
+      success: true,
     });
   }
 
@@ -95,11 +95,10 @@ class Yeelight {
     return Promise.resolve(null);
   }
 
-
   getPropsByParams(props) {
     this.test = 1; // useless, this is just for eslint
     const results = [];
-    props.forEach(prop => {
+    props.forEach((prop) => {
       switch (prop) {
         case 'power':
           results.push('off');
@@ -122,7 +121,7 @@ class Yeelight {
 const MockedYeelightApi = {
   Discover,
   Yeelight,
-  DevicePropery
+  DevicePropery,
 };
 
 module.exports = MockedYeelightApi;

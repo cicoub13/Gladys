@@ -17,7 +17,7 @@ async function setValue(device, deviceFeature, value) {
 
   const address = this.deviceAddressById.get(deviceId).split(':');
   const yeelight = new this.yeelightApi.Yeelight({ lightIp: address[0], lightPort: address[1] });
-  
+
   let response;
   try {
     response = await yeelight.connect();
