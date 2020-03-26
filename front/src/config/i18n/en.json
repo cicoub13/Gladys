@@ -852,6 +852,29 @@
         "defaultDeletionError": "There was an error deleting the device.",
         "conflictError": "Current device is already in Gladys."
       }
+    },
+    "yeelight": {
+      "title": "Yeelight",
+      "deviceTab": "Devices",
+      "device": {
+        "title": "Devices in Gladys",
+        "search": "Search devices",
+        "noDevices": "No Yeelight devices added yet.",
+        "deviceOnNetworkTitle": "Devices detected on network",
+        "scanButton": "Scan network",
+        "noDevicesFound": "No Yeelight devices discovered.",
+        "connectButton": "Connect/Reconnect",
+        "deviceNotHandled": "Device not handled yet, please contact us to help us connect it in Gladys!",
+        "nameLabel": "Device Name",
+        "namePlaceholder": "Enter the name of your device",
+        "modelLabel": "Model",
+        "ipLabel": "IP Address",
+        "roomLabel": "Room",
+        "featuresLabel": "Features",
+        "noFeatures": "No features",
+        "saveButton": "Save",
+        "deleteButton": "Delete"
+      }
     }
   },
   "editScene": {
