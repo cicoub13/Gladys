@@ -15,7 +15,6 @@ module.exports = function YeelightService(gladys, serviceId) {
    */
   function start() {
     logger.log('starting Yeelight service');
-    yeelightHandler.scan();
   }
 
   /**

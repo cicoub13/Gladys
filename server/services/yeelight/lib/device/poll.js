@@ -1,42 +1,21 @@
-const { EVENTS, DEVICE_FEATURE_CATEGORIES, DEVICE_FEATURE_TYPES } = require('../../../../utils/constants');
-const logger = require('../../../../utils/logger');
 const { NotFoundError } = require('../../../../utils/coreErrors');
-const { getDeviceFeature } = require('../../../../utils/device');
-
-/**
- * @description Emit new state.
- * @param {Object} gladys - The gladys instance.
- * @param {Object} device - The device to update the state.
- * @param {string} featureType - The feature type.
- * @param {number} currentValue - The new state.
- * @example
- * emitNewState(gladys, device, featureType, currentValue);
- */
-function emitNewState(gladys, device, featureType, currentValue) {
-  const feature = getDeviceFeature(device, DEVICE_FEATURE_CATEGORIES.LIGHT, featureType);
-
-  if (feature && feature.last_value !== currentValue) {
-    const deviceId = device.external_id.split(':')[1];
-    logger.debug(`Polling device ${deviceId}, ${featureType} change: ${feature.last_value} => ${currentValue}`);
-
-    const deviceFeatureExternalId = `${device.external_id}:${featureType}`;
-    gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
-      device_feature_external_id: deviceFeatureExternalId,
-      state: currentValue,
-    });
-  }
-}
+const { DEVICE_FEATURE_TYPES, STATE } = require('../../../../utils/constants');
+const { getDeviceParam } = require('../../../../utils/device');
+const logger = require('../../../../utils/logger');
+const { DEVICE_IP_ADDRESS, DEVICE_PORT_ADDRESS } = require('../utils/constants');
+const { emitNewState } = require('../utils/emitNewState');
 
 /**
  * @description Poll value of a Yeelight device.
  * @param {Object} device - The device to control.
+ * @returns {Promise<any>} Returns nothing.
  * @example
  * poll(device);
  */
 async function poll(device) {
-  const deviceId = device.external_id.split(':')[1];
-  const address = this.deviceAddressById.get(deviceId).split(':');
-  const yeelight = new this.yeelightApi.Yeelight({ lightIp: address[0], lightPort: address[1] });
+  const lightIp = getDeviceParam(device, DEVICE_IP_ADDRESS);
+  const lightPort = getDeviceParam(device, DEVICE_PORT_ADDRESS);
+  const yeelight = new this.yeelightApi.Yeelight({ lightIp, lightPort });
 
   let response;
   try {
@@ -55,7 +34,7 @@ async function poll(device) {
   await yeelight.disconnect();
 
   // BINARY
-  const currentBinaryValue = state.result.result[0] === 'on' ? 1 : 0;
+  const currentBinaryValue = state.result.result[0] === 'on' ? STATE.ON : STATE.OFF;
   emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.BINARY, currentBinaryValue);
 
   // BRIGHTNESS

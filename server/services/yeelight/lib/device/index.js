@@ -1,6 +1,5 @@
-const { getDevices } = require('./getDevices');
-const { poll } = require('./poll');
 const { scan } = require('./scan');
+const { poll } = require('./poll');
 const { setValue } = require('./setValue');
 
 /**
@@ -15,14 +14,10 @@ const YeelightHandler = function YeelightHandler(gladys, yeelightApi, serviceId)
   this.gladys = gladys;
   this.yeelightApi = yeelightApi;
   this.serviceId = serviceId;
-
-  this.devices = {};
-  this.deviceAddressById = new Map();
 };
 
-YeelightHandler.prototype.getDevices = getDevices;
-YeelightHandler.prototype.poll = poll;
 YeelightHandler.prototype.scan = scan;
+YeelightHandler.prototype.poll = poll;
 YeelightHandler.prototype.setValue = setValue;
 
 module.exports = YeelightHandler;

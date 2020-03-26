@@ -7,19 +7,19 @@ const { DEVICES_MODELS, DEVICE_EXTERNAL_ID_BASE } = require('../utils/constants'
 
 const getYeelightWhiteLight = (device, serviceId) => {
   const modelName = DEVICES_MODELS[device.model] || '';
-  const name = `Yeelight${modelName}`;
+  const name = device.name || modelName === '' ? 'Yeelight' : `Yeelight ${modelName}`;
 
   return {
     service_id: serviceId,
-    name: device.name || name,
-    model: device.model,
+    name,
+    model: modelName,
     external_id: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}`,
     selector: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}`,
     should_poll: true,
     poll_frequency: DEVICE_POLL_FREQUENCIES.EVERY_MINUTES,
     features: [
       {
-        name: `${device.name || name} On/Off`,
+        name: `${name} On/Off`,
         external_id: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}:${DEVICE_FEATURE_TYPES.LIGHT.BINARY}`,
         selector: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}:${DEVICE_FEATURE_TYPES.LIGHT.BINARY}`,
         category: DEVICE_FEATURE_CATEGORIES.LIGHT,
@@ -30,7 +30,7 @@ const getYeelightWhiteLight = (device, serviceId) => {
         max: 1,
       },
       {
-        name: `${device.name || name} Brightness`,
+        name: `${name} Brightness`,
         external_id: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}:${DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS}`,
         selector: `${DEVICE_EXTERNAL_ID_BASE}:${device.id}:${DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS}`,
         category: DEVICE_FEATURE_CATEGORIES.LIGHT,
@@ -39,6 +39,16 @@ const getYeelightWhiteLight = (device, serviceId) => {
         has_feedback: false,
         min: 0,
         max: 100,
+      },
+    ],
+    params: [
+      {
+        name: 'IP_ADDRESS',
+        value: device.host,
+      },
+      {
+        name: 'PORT_ADDRESS',
+        value: device.port,
       },
     ],
   };
