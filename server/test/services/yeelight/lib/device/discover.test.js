@@ -40,7 +40,7 @@ const gladysWithTwoDevices = {
   },
 };
 
-describe('YeelightHandler - discover', () => {
+describe('YeelightHandler discover', () => {
   it('should found 2 devices, 2 of wich are new unknown devices', async () => {
     const yeelightService = YeelightService(gladysWithoutDevices, 'a810b8db-6d04-4697-bed3-c4b72c996279');
     const newDevices = await yeelightService.device.discover();

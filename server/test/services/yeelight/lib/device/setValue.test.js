@@ -7,7 +7,7 @@ const YeelightService = proxyquire('../../../../../services/yeelight/index', {
   'yeelight-awesome': YeelightApi,
 });
 
-describe('YeelightHandler - setValue', () => {
+describe('YeelightHandler setValue', () => {
   const yeelightService = YeelightService({}, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
   it('should set binary value', async () => {

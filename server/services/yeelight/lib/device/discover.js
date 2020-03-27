@@ -1,7 +1,5 @@
 const logger = require('../../../../utils/logger');
-const { getYeelightColorLight } = require('../models/color');
-const { getYeelightUnhandledLight } = require('../models/unhandled');
-const { getYeelightWhiteLight } = require('../models/white');
+const models = require('../models');
 const { DEVICE_EXTERNAL_ID_BASE, DEVICES_MODELS } = require('../utils/constants');
 
 /**
@@ -34,26 +32,25 @@ async function discover() {
       } else {
         logger.debug(`Device "${discoveredDevice.id}" found, model: "${discoveredDevice.model}"`);
 
-        let newDevice;
+        let model;
         if (Object.keys(DEVICES_MODELS).includes(discoveredDevice.model)) {
           // ...else, if the model is supported...
           if (discoveredDevice.capabilities.includes('set_rgb') && discoveredDevice.capabilities.includes('set_hsv')) {
             // ...and has color ability, create a color light device...
-            newDevice = getYeelightColorLight(discoveredDevice, this.serviceId);
+            model = 'color';
           } else {
             // ...else, create a white light device...
-            newDevice = getYeelightWhiteLight(discoveredDevice, this.serviceId);
+            model = 'white';
           }
         } else {
           // ...else the device is not yet handled.
           logger.info(`Device model "${discoveredDevice.model}" not handled yet !`);
-          newDevice = getYeelightUnhandledLight(discoveredDevice, this.serviceId);
+          model = 'unhandled';
         }
-        unknownDevices.push(newDevice);
+        unknownDevices.push(models[model].getDevice(discoveredDevice, this.serviceId));
       }
     });
   }
-  logger.debug(`DEBUG return: ${JSON.stringify(unknownDevices)}`);
   return unknownDevices;
 }
 

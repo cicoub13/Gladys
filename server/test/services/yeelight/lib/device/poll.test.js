@@ -23,7 +23,7 @@ const gladys = {
   stateManager,
 };
 
-describe('YeelightHandler - poll', () => {
+describe('YeelightHandler poll', () => {
   const yeelightService = YeelightService(gladys, 'a810b8db-6d04-4697-bed3-c4b72c996279');
 
   it('should poll device states', async () => {

@@ -20,7 +20,7 @@ const deviceWithLastValue = {
   }),
 };
 
-describe('Yeelight - emitNewState', () => {
+describe('Yeelight utils emitNewState', () => {
   beforeEach(() => {
     sinon.reset();
   });
