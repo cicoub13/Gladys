@@ -8,9 +8,9 @@ const { DEVICE_EXTERNAL_ID_BASE, DEVICES_MODELS } = require('../utils/constants'
  * @description Send a broadcast to find the devices
  * @returns {Promise<Array>} Resolve with array of new devices.
  * @example
- * scan();
+ * discover();
  */
-async function scan() {
+async function discover() {
   const discovery = new this.yeelightApi.Discover();
   let discoveredDevices = [];
   try {
@@ -23,7 +23,7 @@ async function scan() {
   const unknownDevices = [];
 
   // If devices are found...
-  logger.info(`${discoveredDevices.length} device(s) found while scanning !`);
+  logger.info(`${discoveredDevices.length} device(s) found while network scanning !`);
   if (discoveredDevices.length) {
     // ...check, for each of them, if it is already in Gladys...
     discoveredDevices.forEach((discoveredDevice) => {
@@ -58,5 +58,5 @@ async function scan() {
 }
 
 module.exports = {
-  scan,
+  discover,
 };

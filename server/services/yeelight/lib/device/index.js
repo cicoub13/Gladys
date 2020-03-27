@@ -1,4 +1,4 @@
-const { scan } = require('./scan');
+const { discover } = require('./discover');
 const { poll } = require('./poll');
 const { setValue } = require('./setValue');
 
@@ -16,7 +16,7 @@ const YeelightHandler = function YeelightHandler(gladys, yeelightApi, serviceId)
   this.serviceId = serviceId;
 };
 
-YeelightHandler.prototype.scan = scan;
+YeelightHandler.prototype.discover = discover;
 YeelightHandler.prototype.poll = poll;
 YeelightHandler.prototype.setValue = setValue;
 
