@@ -1,7 +1,8 @@
 import { Text } from 'preact-i18n';
 import { Link } from 'preact-router/match';
+import DeviceConfigurationLink from '../../../../components/documentation/DeviceConfigurationLink';
 
-const YeelightPage = ({ children, ...props }) => (
+const YeelightPage = ({ children, user }) => (
   <div class="page">
     <div class="page-main">
       <div class="my-3 my-md-5">
@@ -14,15 +15,37 @@ const YeelightPage = ({ children, ...props }) => (
               <div>
                 <div class="list-group list-group-transparent mb-0">
                   <Link
-                    href="/dashboard/integration/device/yeelight/device"
+                    href="/dashboard/integration/device/yeelight"
+                    activeClassName="active"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <span class="icon mr-3">
+                      <i class="fe fe-link" />
+                    </span>
+                    <Text id="integration.yeelight.deviceTab" />
+                  </Link>
+
+                  <Link
+                    href="/dashboard/integration/device/yeelight/discover"
                     activeClassName="active"
                     class="list-group-item list-group-item-action d-flex align-items-center"
                   >
                     <span class="icon mr-3">
                       <i class="fe fe-radio" />
                     </span>
-                    <Text id="integration.yeelight.deviceTab" />
+                    <Text id="integration.yeelight.discoverTab" />
                   </Link>
+
+                  <DeviceConfigurationLink
+                    user={user}
+                    documentKey="yeelight"
+                    linkClass="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <span class="icon mr-3">
+                      <i class="fe fe-book-open" />
+                    </span>
+                    <Text id="integration.yeelight.discover.documentation" />
+                  </DeviceConfigurationLink>
                 </div>
               </div>
             </div>

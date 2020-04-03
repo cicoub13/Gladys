@@ -42,7 +42,7 @@ function createActions(store) {
         getYeelightNewDevicesStatus: RequestStatus.Getting
       });
       try {
-        const yeelightDevices = await state.httpClient.get('/api/v1/service/yeelight/discover');
+        const yeelightDevices = await state.httpClient.get('/api/v1/service/yeelight/scan');
         const yeelightNewDevices = yeelightDevices.filter(device => {
           if (!state.yeelightDevicesMap) {
             return true;
@@ -97,7 +97,7 @@ function createActions(store) {
       store.setState(newState);
     },
     async deleteDevice(state, device, index) {
-      await state.httpClient.delete('/api/v1/device/' + device.selector);
+      await state.httpClient.delete(`/api/v1/device/${device.selector}`);
       const newState = update(state, {
         yeelightDevices: {
           $splice: [[index, 1]]
