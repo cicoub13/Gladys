@@ -1,9 +1,9 @@
 const { expect } = require('chai');
 const proxyquire = require('proxyquire').noCallThru();
-const GladysColorDevice = require('../../Gladys-color.json');
-const GladysWhiteDevice = require('../../Gladys-white.json');
-const YeelightApi = require('../../yeelight.mock.test');
-const YeelightEmptyApi = require('../../yeelight-empty.mock.test');
+const GladysColorDevice = require('../../mocks/Gladys-color.json');
+const GladysWhiteDevice = require('../../mocks/Gladys-white.json');
+const YeelightApi = require('../../mocks/yeelight.mock.test');
+const YeelightEmptyApi = require('../../mocks/yeelight-empty.mock.test');
 
 const YeelightService = proxyquire('../../../../../services/yeelight/index', {
   'yeelight-awesome': YeelightApi,

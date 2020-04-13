@@ -1,11 +1,11 @@
 const { expect } = require('chai');
 const models = require('../../../../../services/yeelight/lib/models');
-const GladysColorDevice = require('../../Gladys-color.json');
-const GladysWhiteDevice = require('../../Gladys-white.json');
-const GladysUnhandledDevice = require('../../Gladys-unhandled.json');
-const yeelightColorDevice = require('../../yeelight-color.json');
-const yeelightWhiteDevice = require('../../yeelight-white.json');
-const yeelightUnhandledDevice = require('../../yeelight-unhandled.json');
+const GladysColorDevice = require('../../mocks/Gladys-color.json');
+const GladysWhiteDevice = require('../../mocks/Gladys-white.json');
+const GladysUnhandledDevice = require('../../mocks/Gladys-unhandled.json');
+const yeelightColorDevice = require('../../mocks/yeelight-color.json');
+const yeelightWhiteDevice = require('../../mocks/yeelight-white.json');
+const yeelightUnhandledDevice = require('../../mocks/yeelight-unhandled.json');
 
 describe('Yeelight models getDevice', () => {
   it('should return device and features for a color model', () => {

@@ -2,8 +2,8 @@ const { assert } = require('chai');
 const { fake } = require('sinon');
 const EventEmitter = require('events');
 const proxyquire = require('proxyquire').noCallThru();
-const GladysDevice = require('../../Gladys-color.json');
-const YeelightApi = require('../../yeelight.mock.test');
+const GladysDevice = require('../../mocks/Gladys-color.json');
+const YeelightApi = require('../../mocks/yeelight.mock.test');
 
 const YeelightService = proxyquire('../../../../../services/yeelight/index', {
   'yeelight-awesome': YeelightApi,
