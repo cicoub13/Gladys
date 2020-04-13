@@ -1,6 +1,6 @@
 const logger = require('../../../../utils/logger');
 const models = require('../models');
-const { DEVICE_EXTERNAL_ID_BASE, DEVICES_MODELS } = require('../utils/constants');
+const { DEVICE_EXTERNAL_ID_BASE, DEVICES_MODELS, COMMAND_TYPE } = require('../utils/constants');
 
 /**
  * @description Send a broadcast to find the devices
@@ -35,19 +35,22 @@ async function discover() {
         let model;
         if (Object.keys(DEVICES_MODELS).includes(discoveredDevice.model)) {
           // ...else, if the model is supported...
-          if (discoveredDevice.capabilities.includes('set_rgb') && discoveredDevice.capabilities.includes('set_hsv')) {
+          if (
+            discoveredDevice.capabilities.includes(COMMAND_TYPE.SET_RGB) &&
+            discoveredDevice.capabilities.includes(COMMAND_TYPE.SET_HSV)
+          ) {
             // ...and has color ability, create a color light device...
-            model = 'color';
+            model = models.color;
           } else {
             // ...else, create a white light device...
-            model = 'white';
+            model = models.white;
           }
         } else {
           // ...else the device is not yet handled.
           logger.info(`Device model "${discoveredDevice.model}" not handled yet !`);
-          model = 'unhandled';
+          model = models.unhandled;
         }
-        unknownDevices.push(models[model].getDevice(discoveredDevice, this.serviceId));
+        unknownDevices.push(model.getDevice(discoveredDevice, this.serviceId));
       }
     });
   }

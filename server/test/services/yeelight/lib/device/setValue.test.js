@@ -1,4 +1,5 @@
-const { assert } = require('chai');
+const { expect } = require('chai');
+const { assert } = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 const GladysDevice = require('../../mocks/Gladys-color.json');
 const YeelightApi = require('../../mocks/yeelight.mock.test');
@@ -33,7 +34,11 @@ describe('YeelightHandler setValue', () => {
         },
       ],
     };
-    const promise = yeelightService.device.setValue(notFoundDevice, { category: 'light', type: 'binary' }, 1);
-    return assert.isRejected(promise, 'YEELIGHT_DEVICE_NOT_FOUND');
+    try {
+      await yeelightService.device.setValue(notFoundDevice, { category: 'light', type: 'binary' }, 1);
+      assert.fail();
+    } catch (error) {
+      expect(error.message).to.equal('YEELIGHT_DEVICE_NOT_FOUND');
+    }
   });
 });
