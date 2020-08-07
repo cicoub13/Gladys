@@ -14,6 +14,9 @@ const YeelightHandler = function YeelightHandler(gladys, yeelightApi, serviceId)
   this.gladys = gladys;
   this.yeelightApi = yeelightApi;
   this.serviceId = serviceId;
+
+  this.discoveryInProgress = false;
+  this.discovery = undefined;
 };
 
 YeelightHandler.prototype.discover = discover;

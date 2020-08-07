@@ -1,8 +1,5 @@
 const Promise = require('bluebird');
 const { EventEmitter } = require('events');
-const yeelightColor = require('./yeelight-color.json');
-const yeelightWhite = require('./yeelight-white.json');
-const yeelightUnhandled = require('./yeelight-unhandled.json');
 
 const DevicePropery = {
   POWER: 'power',
@@ -29,13 +26,11 @@ const DevicePropery = {
   NL_BR: 'nl_br',
   ACTIVE_MODE: 'active_mode',
 };
-const devices = [yeelightColor, yeelightWhite, yeelightUnhandled];
 
 class Discover extends EventEmitter {
   start() {
     this.test = 1; // useless, this is just for eslint
-    devices.forEach((device) => this.emit('deviceAdded', device));
-    return new Promise((resolve, _) => resolve(devices));
+    return new Promise((resolve, _) => setTimeout(() => resolve([]), 10500));
   }
 
   destroy() {
@@ -44,11 +39,6 @@ class Discover extends EventEmitter {
   }
 }
 
-const connected = {
-  options: { lightIp: '192.168.0.0', lightPort: 55443, timeout: 5000 },
-  connected: true,
-};
-
 class Yeelight {
   constructor({ lightIp, lightPort }) {
     this.lightIp = lightIp;
@@ -56,41 +46,23 @@ class Yeelight {
   }
 
   connect() {
-    if (this.lightIp !== 'not_found') {
-      connected.options.lightIp = this.lightIp;
-      return Promise.resolve(connected);
-    }
+    this.test = 1; // useless, this is just for eslint
     return Promise.reject(new Error('Connection timeout'));
   }
 
   setPower(turnOn, effect = 'sudden', duration = 500) {
     this.test = 1; // useless, this is just for eslint
-    return Promise.resolve({
-      action: 'set_power',
-      command: { id: 1, method: 'set_power', params: [turnOn ? 'on' : 'off', effect, duration] },
-      result: { id: 1, result: ['ok'] },
-      success: true,
-    });
+    return Promise.resolve(null);
   }
 
   setBright(brightness, effect = 'sudden', duration = 500) {
     this.test = 1; // useless, this is just for eslint
-    return Promise.resolve({
-      action: 'set_bright',
-      command: { id: 1, method: 'set_bright', params: [brightness, effect, duration] },
-      result: { id: 1, result: ['ok'] },
-      success: true,
-    });
+    return Promise.resolve(null);
   }
 
   getProperty(params) {
     this.test = 1; // useless, this is just for eslint
-    return Promise.resolve({
-      action: 'get_prop',
-      command: { id: 1, method: 'get_prop', params },
-      result: { id: 1, result: this.getPropsByParams(params) },
-      success: true,
-    });
+    return Promise.resolve(null);
   }
 
   disconnect() {
@@ -100,24 +72,7 @@ class Yeelight {
 
   getPropsByParams(props) {
     this.test = 1; // useless, this is just for eslint
-    const results = [];
-    props.forEach((prop) => {
-      switch (prop) {
-        case 'power':
-          results.push('off');
-          break;
-        case 'bright':
-          results.push(50);
-          break;
-        case 'rgb':
-          results.push(1315890);
-          break;
-
-        default:
-          break;
-      }
-    });
-    return results;
+    return [];
   }
 }
 
