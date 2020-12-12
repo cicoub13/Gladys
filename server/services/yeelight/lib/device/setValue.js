@@ -28,14 +28,12 @@ async function setValue(device, deviceFeature, value) {
     throw new NotFoundError(`YEELIGHT_DEVICE_NOT_FOUND`);
   }
 
-  let state;
   switch (deviceFeature.type) {
     case DEVICE_FEATURE_TYPES.LIGHT.BINARY:
-      state = value === STATE.ON;
-      await yeelight.setPower(state);
+      await yeelight.setPower(value === STATE.ON);
       break;
     case DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS:
-      await yeelight.setBright(state);
+      await yeelight.setBright(value);
       break;
     default:
       logger.warn(`Feature type "${deviceFeature.type}" not handled yet !`);
