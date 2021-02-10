@@ -1,3 +1,4 @@
+const { intToRgb } = require('../../../../utils/colors');
 const { NotFoundError } = require('../../../../utils/coreErrors');
 const { DEVICE_FEATURE_TYPES, STATE } = require('../../../../utils/constants');
 const { getDeviceParam } = require('../../../../utils/device');
@@ -30,16 +31,31 @@ async function poll(device) {
   const state = await yeelight.getProperty([
     this.yeelightApi.DevicePropery.POWER,
     this.yeelightApi.DevicePropery.BRIGHT,
+    this.yeelightApi.DevicePropery.CT,
+    this.yeelightApi.DevicePropery.RGB,
   ]);
   await yeelight.disconnect();
 
   // BINARY
   const currentBinaryValue = state.result.result[0] === 'on' ? STATE.ON : STATE.OFF;
-  emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.BINARY, currentBinaryValue);
+  logger.debug(`Yeelight: Power is ${state.result.result[0]}`);
+  await emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.BINARY, currentBinaryValue);
 
   // BRIGHTNESS
   const currentBrightnessValue = parseInt(state.result.result[1], 10);
-  emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS, currentBrightnessValue);
+  logger.debug(`Yeelight: Brightness at ${currentBrightnessValue}%`);
+  await emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS, currentBrightnessValue);
+
+  // COLOR TEMPERATURE
+  const currentTemperatureValue = parseInt(state.result.result[2], 10);
+  logger.debug(`Yeelight: Temperature: ${currentTemperatureValue}K`);
+  // await emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.TEMPERATURE, currentTemperatureValue);
+
+  // COLOR
+  const currentColorValue = parseInt(state.result.result[3], 10);
+  const rgb = intToRgb(currentColorValue);
+  logger.debug(`Yeelight: RGB: ${rgb} (${currentColorValue})`);
+  await emitNewState(this.gladys, device, DEVICE_FEATURE_TYPES.LIGHT.COLOR, currentColorValue);
 }
 
 module.exports = {

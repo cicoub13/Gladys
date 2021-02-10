@@ -6,6 +6,7 @@ const { DEVICE_EXTERNAL_ID_BASE, DEVICE_IP_ADDRESS, DEVICE_PORT_ADDRESS } = requ
 // Features
 const binaryFeature = require('./binary');
 const brightnessFeature = require('./brightness');
+const temperatureFeature = require('./temperature');
 const colorFeature = require('./color');
 
 const AVAILABLE_FEATURE_MODELS = {
@@ -18,6 +19,11 @@ const AVAILABLE_FEATURE_MODELS = {
     id: DEVICE_FEATURE_TYPES.LIGHT.BRIGHTNESS,
     capabilities: ['set_bright'],
     feature: brightnessFeature,
+  },
+  temperature: {
+    id: DEVICE_FEATURE_TYPES.LIGHT.TEMPERATURE,
+    capabilities: ['set_ct_abx'],
+    feature: temperatureFeature,
   },
   color: {
     id: DEVICE_FEATURE_TYPES.LIGHT.COLOR,
@@ -56,8 +62,8 @@ const getDeviceName = (device) => {
 };
 
 /**
- * @description Get the external ID of the eWeLink device.
- * @param {Object} device - The eWeLink device.
+ * @description Get the external ID of the Yeelight device.
+ * @param {Object} device - The Yeelight device.
  * @returns {string} Return the external ID of the Gladys device.
  * @example
  * getExternalId(device, 1);
@@ -69,9 +75,9 @@ function getExternalId(device) {
 /**
  * @description Parse the external ID of the Gladys device.
  * @param {string} externalId - External ID of the Gladys device.
- * @returns {Object} Return the prefix, the device ID, the channel count and the type.
+ * @returns {Object} Return the prefix, the device ID and the type.
  * @example
- * parseExternalId('eWeLink:100069d0d4:power:4');
+ * parseExternalId('yeelight:0x00000000035ac142:power');
  */
 function parseExternalId(externalId) {
   const [prefix, deviceId, type] = externalId.split(':');
@@ -79,9 +85,9 @@ function parseExternalId(externalId) {
 }
 
 /**
- * @description Create an eWeLink device for Gladys.
+ * @description Create an Yeelight device for Gladys.
  * @param {string} serviceId - The UUID of the service.
- * @param {Object} device - The eWeLink device.
+ * @param {Object} device - The Yeelight device.
  * @returns {Object} Return Gladys device.
  * @example
  * getDevice(serviceId, device, channel);
