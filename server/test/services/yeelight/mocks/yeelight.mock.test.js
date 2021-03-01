@@ -32,7 +32,7 @@ const DevicePropery = {
 const devices = [yeelightColor, yeelightWhite, yeelightUnhandled];
 
 class Discover extends EventEmitter {
-  start() {
+  scanByIp() {
     this.test = 1; // useless, this is just for eslint
     devices.forEach((device) => this.emit('deviceAdded', device));
     return new Promise((resolve, _) => resolve(devices));

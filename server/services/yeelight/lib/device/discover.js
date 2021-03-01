@@ -35,10 +35,10 @@ async function discover() {
         }
       });
 
-      this.discovery.once('error', (error) => reject(error));
+      this.discovery.on('error', (error) => reject(error));
 
       this.discovery
-        .start()
+        .scanByIp()
         .then(() => {
           this.discovery.destroy().catch((err) => logger.warn(`Yeelight: ${err}`));
           this.discoveryInProgress = false;

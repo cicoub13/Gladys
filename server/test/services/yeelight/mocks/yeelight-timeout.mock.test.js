@@ -29,7 +29,7 @@ const DevicePropery = {
 };
 
 class Discover extends EventEmitter {
-  start() {
+  scanByIp() {
     this.test = 1; // useless, this is just for eslint
     return new Promise((resolve, _) => setTimeout(() => resolve([]), 10500));
   }
