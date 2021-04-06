@@ -11,7 +11,8 @@ import { DEVICE_FEATURE_CATEGORIES } from '../../../../../../server/utils/consta
 const SPECIAL_SENSORS = [
   DEVICE_FEATURE_CATEGORIES.OPENING_SENSOR,
   DEVICE_FEATURE_CATEGORIES.MOTION_SENSOR,
-  DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR
+  DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR,
+  DEVICE_FEATURE_CATEGORIES.BUTTON
 ];
 const LAST_SEEN_SENSORS = [DEVICE_FEATURE_CATEGORIES.MOTION_SENSOR, DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR];
 
@@ -44,6 +45,11 @@ const SensorDeviceType = ({ children, ...props }) => (
       <td class="text-right">
         {props.deviceFeature.last_value === 1 && <i class="fe fe-shield" />}
         {props.deviceFeature.last_value === 0 && <i class="fe fe-shield-off" />}
+      </td>
+    )}
+    {props.deviceFeature.category === DEVICE_FEATURE_CATEGORIES.BUTTON && (
+      <td class="text-right text-nowrap">
+        <Text id={`deviceFeatureCategory.button.values.${props.deviceFeature.last_value}`} />
       </td>
     )}
     {LAST_SEEN_SENSORS.includes(props.deviceFeature.category) && (

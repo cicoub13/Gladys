@@ -1462,7 +1462,19 @@
     },
     "button": {
       "shortCategoryName": "Button",
-      "click": "Button (click)"
+      "click": "Button (click)",
+      "values": {
+        "single": "Simple click",
+        "double": "Double click",
+        "triple": "Triple click",
+        "hold": "Long click",
+        "single-left": "Simple left click",
+        "double-left": "Double left click",
+        "hold-left": "Long left click",
+        "single-right": "Simple right click",
+        "double-right": "Double right click",
+        "hold-right": "Long right click"
+      }
     },
     "pressure-sensor": {
       "shortCategoryName": "Pressure sensor",

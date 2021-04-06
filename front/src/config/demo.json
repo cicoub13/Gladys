@@ -122,6 +122,7 @@
           "room": "living-room",
           "device_features": [
             "main-lamp-binary",
+            "main-button-click",
             "tv-lamp-binary",
             "tv-lamp-color",
             "tv-lamp-brightness",
@@ -256,6 +257,15 @@
             "max": 1,
             "read_only": false,
             "last_value": 1,
+            "last_value_changed": "2019-02-12 07:49:07.556 +00:00"
+          },
+          {
+            "name": "Button",
+            "selector": "main-button-click",
+            "category": "button",
+            "type": "click",
+            "read_only": true,
+            "last_value": "double",
             "last_value_changed": "2019-02-12 07:49:07.556 +00:00"
           },
           {
@@ -549,6 +559,22 @@
               "read_only": true,
               "last_value": 74,
               "unit": "percent",
+              "last_value_changed": "2019-02-12 07:49:07.556 +00:00"
+            }
+          ]
+        },
+        {
+          "id": "8d3a041c-3ba5-44de-b602-c1559e82274c",
+          "name": "Button",
+          "selector": "button-click",
+          "features": [
+            {
+              "name": "Button",
+              "selector": "kitchen-button-click",
+              "category": "button",
+              "type": "click",
+              "read_only": true,
+              "last_value": "single",
               "last_value_changed": "2019-02-12 07:49:07.556 +00:00"
             }
           ]

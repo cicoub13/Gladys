@@ -19,9 +19,37 @@ describe('zigbee2mqtt convertValue', () => {
     const result = convertValue('click', 'double');
     return assert.deepEqual(result, BUTTON_STATUS.DOUBLE_CLICK);
   });
+  it('should return tripe click state', () => {
+    const result = convertValue('click', 'triple');
+    return assert.deepEqual(result, BUTTON_STATUS.TRIPLE_CLICK);
+  });
   it('should return hold click state', () => {
     const result = convertValue('click', 'hold');
     return assert.deepEqual(result, BUTTON_STATUS.LONG_CLICK);
+  });
+  it('should return left click state', () => {
+    const result = convertValue('click', 'left');
+    return assert.deepEqual(result, BUTTON_STATUS.LEFT_CLICK);
+  });
+  it('should return left double click state', () => {
+    const result = convertValue('click', 'left_double');
+    return assert.deepEqual(result, BUTTON_STATUS.LEFT_DOUBLE_CLICK);
+  });
+  it('should return right click state', () => {
+    const result = convertValue('click', 'right');
+    return assert.deepEqual(result, BUTTON_STATUS.RIGHT_CLICK);
+  });
+  it('should return right double click state', () => {
+    const result = convertValue('click', 'right_double');
+    return assert.deepEqual(result, BUTTON_STATUS.RIGHT_DOUBLE_CLICK);
+  });
+  it('should return left hold click state', () => {
+    const result = convertValue('click', 'left_long');
+    return assert.deepEqual(result, BUTTON_STATUS.LEFT_HOLD_CLICK);
+  });
+  it('should return right hold click state', () => {
+    const result = convertValue('click', 'right_long');
+    return assert.deepEqual(result, BUTTON_STATUS.RIGHT_HOLD_CLICK);
   });
   it('should return default click state', () => {
     const result = convertValue('click', 'unknown');

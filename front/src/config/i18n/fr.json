@@ -1462,7 +1462,19 @@
     },
     "button": {
       "shortCategoryName": "Bouton",
-      "click": "Clic bouton"
+      "click": "Clic bouton",
+      "values": {
+        "single": "Clic simple",
+        "double": "Clic double",
+        "triple": "Clic triple",
+        "hold": "Clic long",
+        "single-left": "Clic gauche simple",
+        "double-left": "Clic gauche double",
+        "hold-left": "Clic gauche long",
+        "single-right": "Clic droit simple",
+        "double-right": "Clic droit double",
+        "hold-right": "Clic droit long"
+      }
     },
     "pressure-sensor": {
       "shortCategoryName": "Capteur de pression",
