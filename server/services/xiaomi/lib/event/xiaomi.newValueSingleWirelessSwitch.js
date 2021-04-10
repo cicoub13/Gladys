@@ -9,6 +9,7 @@ const {
 const { SWITCH_STATUS } = require('../utils/deviceStatus');
 
 const { getBatteryPercent } = require('../utils/getBatteryPercent');
+const { convertXiaomiSwitchValueToGladysButtonValue } = require('../utils/convertXiaomiSwitchValueToGladysButtonValue');
 
 const MIN_VOLT = 2800;
 const MAX_VOLT = 3300;
@@ -76,7 +77,7 @@ function newValueSingleWirelessSwitch(message, data) {
     if (SWITCH_STATUS[currentStatusMaj]) {
       this.gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
         device_feature_external_id: EXTERNAL_ID_BUTTON,
-        state: SWITCH_STATUS[currentStatusMaj],
+        state: convertXiaomiSwitchValueToGladysButtonValue(currentStatusMaj),
       });
     }
   }
