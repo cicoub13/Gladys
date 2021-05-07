@@ -2,10 +2,13 @@ import { Component } from 'preact';
 import { connect } from 'unistore/preact';
 import { Text, Localizer } from 'preact-i18n';
 import cx from 'classnames';
+import Select from 'react-select';
 
 import { DEVICE_FEATURE_CATEGORIES, DEVICE_FEATURE_TYPES } from '../../../../../../server/utils/constants';
 
 import SelectDeviceFeature from '../../../../components/device/SelectDeviceFeature';
+
+const deviceOptions = [];
 
 @connect('httpClient', {})
 class TurnOnLight extends Component {
@@ -27,6 +30,9 @@ class TurnOnLight extends Component {
       this.props.updateTriggerProperty(this.props.index, 'value', 1);
       this.props.updateTriggerProperty(this.props.index, 'threshold_only', false);
     }
+    if (deviceFeature && deviceFeature.type === DEVICE_FEATURE_TYPES.BUTTON.CLICK) {
+      this.props.updateTriggerProperty(this.props.index, 'operator', '=');
+    }
   };
   handleOperatorChange = e => {
     this.props.updateTriggerProperty(this.props.index, 'operator', e.target.value);
@@ -40,6 +46,11 @@ class TurnOnLight extends Component {
   };
   handleValueChangeBinary = newValue => () => {
     this.props.updateTriggerProperty(this.props.index, 'value', newValue);
+  };
+  handleValueChangeButton = selectedOption => {
+    if (selectedOption && selectedOption.value) {
+      this.props.updateTriggerProperty(this.props.index, 'value', selectedOption.value);
+    }
   };
   handleThresholdOnlyModeChange = e => {
     this.props.updateTriggerProperty(this.props.index, 'threshold_only', e.target.checked);
@@ -83,6 +94,25 @@ class TurnOnLight extends Component {
       </div>
     </div>
   );
+  getButtonSelector = () => (
+    <div class="col-6">
+      <div class="row">
+        <div class="col-2">
+          <div class="text-center" style={{ marginTop: '10px' }}>
+            <i class="fe fe-arrow-right" style={{ fontSize: '20px' }} />
+          </div>
+        </div>
+        <div class="col-10">
+          <Select
+            defaultValue={''}
+            value={deviceOptions.filter(({ value }) => value === this.props.trigger.value)}
+            onChange={this.handleValueChangeButton}
+            options={deviceOptions}
+          />
+        </div>
+      </div>
+    </div>
+  );
   getPresenceSensor = () => (
     <div class="col-6">
       <button class="btn btn-block btn-secondary" disabled>
@@ -90,7 +120,12 @@ class TurnOnLight extends Component {
       </button>
     </div>
   );
-
+  componentWillMount = () => {
+    const dictionnary = this.context.intl.dictionary;
+    Object.entries(dictionnary.deviceFeatureCategory.button.values).forEach(([key, value]) => {
+      deviceOptions.push({ value: key, label: value });
+    });
+  };
   render(props, { selectedDeviceFeature }) {
     return (
       <div>
@@ -107,6 +142,9 @@ class TurnOnLight extends Component {
             selectedDeviceFeature.type === DEVICE_FEATURE_TYPES.SWITCH.BINARY &&
             this.getBinaryOperator()}
           {selectedDeviceFeature &&
+            selectedDeviceFeature.type === DEVICE_FEATURE_TYPES.BUTTON.CLICK &&
+            this.getButtonSelector()}
+          {selectedDeviceFeature &&
             selectedDeviceFeature.type === DEVICE_FEATURE_TYPES.SWITCH.BINARY &&
             this.getBinaryButtons()}
           {selectedDeviceFeature &&
@@ -114,7 +152,8 @@ class TurnOnLight extends Component {
             this.getPresenceSensor()}
           {selectedDeviceFeature &&
             selectedDeviceFeature.type !== DEVICE_FEATURE_TYPES.SWITCH.BINARY &&
-            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR && (
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR &&
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.BUTTON && (
               <div class="col-3">
                 <div class="form-group">
                   <select class="form-control" onChange={this.handleOperatorChange} value={props.trigger.operator}>
@@ -145,7 +184,8 @@ class TurnOnLight extends Component {
             )}
           {selectedDeviceFeature &&
             selectedDeviceFeature.type !== DEVICE_FEATURE_TYPES.SWITCH.BINARY &&
-            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR && (
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR &&
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.BUTTON && (
               <div class="col-3">
                 <div class="form-group">
                   <div class="input-group">
@@ -169,21 +209,23 @@ class TurnOnLight extends Component {
                 </div>
               </div>
             )}
-          {selectedDeviceFeature && selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR && (
-            <div class="col-12">
-              <label class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  checked={props.trigger.threshold_only}
-                  onChange={this.handleThresholdOnlyModeChange}
-                />
-                <span class="form-check-label">
-                  <Text id="editScene.triggersCard.newState.onlyExecuteAtThreshold" />
-                </span>
-              </label>
-            </div>
-          )}
+          {selectedDeviceFeature &&
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.PRESENCE_SENSOR &&
+            selectedDeviceFeature.category !== DEVICE_FEATURE_CATEGORIES.BUTTON && (
+              <div class="col-12">
+                <label class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    checked={props.trigger.threshold_only}
+                    onChange={this.handleThresholdOnlyModeChange}
+                  />
+                  <span class="form-check-label">
+                    <Text id="editScene.triggersCard.newState.onlyExecuteAtThreshold" />
+                  </span>
+                </label>
+              </div>
+            )}
         </div>
       </div>
     );

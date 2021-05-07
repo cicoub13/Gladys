@@ -4,11 +4,16 @@ const STATE = {
 };
 
 const BUTTON_STATUS = {
-  CLICK: 1,
-  DOUBLE_CLICK: 2,
-  LONG_CLICK_PRESS: 3,
-  LONG_CLICK_RELEASE: 4,
-  LONG_CLICK: 5,
+  CLICK: 'single',
+  DOUBLE_CLICK: 'double',
+  TRIPLE_CLICK: 'triple',
+  HOLD_CLICK: 'hold',
+  LEFT_CLICK: 'single-left',
+  LEFT_DOUBLE_CLICK: 'double-left',
+  LEFT_HOLD_CLICK: 'hold-left',
+  RIGHT_CLICK: 'single-right',
+  RIGHT_DOUBLE_CLICK: 'double-right',
+  RIGHT_HOLD_CLICK: 'hold-right',
 };
 
 const USER_ROLE = {

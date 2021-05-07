@@ -25,8 +25,29 @@ function convertValue(feature, value) {
         case 'double':
           result = BUTTON_STATUS.DOUBLE_CLICK;
           break;
+        case 'triple':
+          result = BUTTON_STATUS.TRIPLE_CLICK;
+          break;
         case 'hold':
           result = BUTTON_STATUS.LONG_CLICK;
+          break;
+        case 'left':
+          result = BUTTON_STATUS.LEFT_CLICK;
+          break;
+        case 'left_double':
+          result = BUTTON_STATUS.LEFT_DOUBLE_CLICK;
+          break;
+        case 'right':
+          result = BUTTON_STATUS.RIGHT_CLICK;
+          break;
+        case 'right_double':
+          result = BUTTON_STATUS.RIGHT_DOUBLE_CLICK;
+          break;
+        case 'left_long':
+          result = BUTTON_STATUS.LEFT_HOLD_CLICK;
+          break;
+        case 'right_long':
+          result = BUTTON_STATUS.RIGHT_HOLD_CLICK;
           break;
         default:
           result = value;
