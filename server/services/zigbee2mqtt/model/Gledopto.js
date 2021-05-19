@@ -7,6 +7,7 @@ const Gledopto = {
   brand: 'Gledopto',
   models: {
     'GL-C-008': [features.light, features.brightness, features.color_temperature], // color xy
+    'GL-C-008P': [features.light, features.brightness, features.color_temperature], // color xy
     'GL-S-004Z': [features.light, features.brightness, features.color_temperature],
     'GL-C-006/GL-C-009': [features.light, features.brightness, features.color_temperature],
     'GL-S-007Z': [features.light, features.brightness, features.color_temperature],
