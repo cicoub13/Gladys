@@ -114,7 +114,7 @@ function createActions(store) {
       await actions.getZigbee2mqttDevices(store.getState(), 20, 0);
     }
   };
-  actions.debouncedSearch = debounce(actions.search, 200);
+  actions.debouncedSearch = debounce(actions.search, 400);
 
   return Object.assign({}, integrationActions, houseActions, actions);
 }
