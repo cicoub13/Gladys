@@ -24,7 +24,7 @@ async function getTemperatureInRoom(roomId, options) {
 
   const oneHourAgo = new Date(new Date().getTime() - 1 * 60 * 60 * 1000);
   const deviceFeatures = await db.DeviceFeature.findAll({
-    attributes: ['last_value', 'unit'],
+    attributes: ['last_value', 'unit', 'last_value_changed'],
     include: [
       {
         model: db.Device,
@@ -54,6 +54,8 @@ async function getTemperatureInRoom(roomId, options) {
   }
 
   let total = 0;
+  let lastValueChanged = new Date();
+  lastValueChanged.setDate(lastValueChanged.getDate() - 1);
 
   deviceFeatures.forEach((deviceFeature) => {
     let temperature;
@@ -73,6 +75,9 @@ async function getTemperatureInRoom(roomId, options) {
       temperature = deviceFeature.last_value;
     }
     total += temperature;
+    if (deviceFeature.last_value_changed > lastValueChanged) {
+      lastValueChanged = deviceFeature.last_value_changed;
+    }
   });
 
   // we calculate the average value
@@ -82,6 +87,7 @@ async function getTemperatureInRoom(roomId, options) {
   return {
     temperature: averageTemperature,
     unit: optionsWithDefault.unit,
+    lastValueChanged,
   };
 }
 

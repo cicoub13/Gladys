@@ -52,7 +52,10 @@ const RoomTemperatureBox = ({ children, ...props }) => (
             <Text id="dashboard.boxes.temperatureInRoom.noTemperatureRecorded" />
           </p>
         )}
-        <small class="text-muted">{props.roomName}</small>
+        <small class="text-muted" title={props.lastValueChanged}>
+          {props.roomName}
+        </small>
+        <br />
       </div>
     </div>
   </div>
@@ -87,6 +90,7 @@ class RoomTemperatureBoxComponent extends Component {
     const boxData = get(props, `${DASHBOARD_BOX_DATA_KEY}TemperatureInRoom.${props.x}_${props.y}`);
     const boxStatus = get(props, `${DASHBOARD_BOX_STATUS_KEY}TemperatureInRoom.${props.x}_${props.y}`);
     const temperature = get(boxData, 'room.temperature.temperature');
+    const lastValueChanged = get(boxData, 'room.temperature.lastValueChanged');
     const unit = get(boxData, 'room.temperature.unit');
     const roomName = get(boxData, 'room.name');
 
@@ -115,6 +119,7 @@ class RoomTemperatureBoxComponent extends Component {
       <RoomTemperatureBox
         {...props}
         temperature={temperature}
+        lastValueChanged={lastValueChanged}
         unit={unit}
         boxStatus={boxStatus}
         roomName={roomName}
