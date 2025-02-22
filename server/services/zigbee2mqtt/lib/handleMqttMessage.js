@@ -41,6 +41,27 @@ async function handleMqttMessage(topic, message) {
       });
       break;
     }
+    case 'zigbee2mqtt/bridge/info': {
+      // Keep only "coordinator version and type" value
+      const info = JSON.parse(message);
+      this.coordinatorFirmwareVersion = {
+        major: parseInt(info.coordinator.meta.majorrel),
+        minor: parseInt(info.coordinator.meta.minorrel),
+      };
+      this.coordinatorType = info.coordinator.type;
+
+      logger.debug('Getting info from Zigbee2mqtt : coordinatorFirmwareVersion =', this.coordinatorFirmwareVersion, ' type=', this.coordinatorType);
+      if (
+        this.coordinatorType === 'zStack3x0' &&
+        (this.coordinatorFirmwareVersion.major < 7 ||
+          (this.coordinatorFirmwareVersion.major >= 7 && this.coordinatorFirmwareVersion.minor < 4))
+      ) {
+        logger.warn('Zigbee2Mqtt Coordinator ', this.coordinatorType,' needs a firwmare update');
+        this.needEzspFirmwareUpdate = true;
+      }
+      this.emitStatusEvent();
+      break;
+    }
     case 'zigbee2mqtt/bridge/config': {
       // Keep only "permit_join" value
       const config = JSON.parse(message);

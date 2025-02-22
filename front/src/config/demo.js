@@ -1736,6 +1736,11 @@ const data = {
     Z2M_TCP_PORT: '12000'
   },
   'get /api/v1/service/zigbee2mqtt/adapter': [
+    {
+      name : 'Electrolama zig-a-zig-ah! (zzh!)',
+      display_name : 'Electrolama zig-a-zig-ah! (zzh!)',
+      needs_ezsp_migration: true
+    },
     'ConBee',
     'ConBee II',
     'RaspBee',
@@ -1764,7 +1769,8 @@ const data = {
     zigbee2mqttConnected: true,
     z2mEnabled: true,
     dockerBased: true,
-    networkModeValid: true
+    networkModeValid: true,
+    needEzspFirmwareUpdate: true
   },
   'get /api/v1/service/tasmota': {},
   'get /api/v1/service/tasmota/device': [

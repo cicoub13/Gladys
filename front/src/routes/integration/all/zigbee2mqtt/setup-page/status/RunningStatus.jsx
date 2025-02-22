@@ -40,7 +40,18 @@ const RunningStatus = ({ zigbee2mqttStatus = {}, setupZigee2mqttStatus }) => {
           />
         </div>
       </div>
+      {zigbee2mqttStatus.needEzspFirmwareUpdate && (
+      <div class="alert alert-warning mt-4">
+        <h4 class="alert-title">Votre dongle Zigbee nécessite une mise à jour</h4>
+        <div class="text-secondary">
+          Le driver ezsp n'est plus maintenu. Nous pouvons mettre à jour le driver utilisé par Gladys mais
+          votre dongle doit être mis à jour en version 7.4.x ou supérieur.
+          Pour effectuer cette mise à jour, veuillez suivre la documentation <a href="">ici</a>.
+        </div>
+      </div>
+    )}
     </Fragment>
+    
   );
 };
 

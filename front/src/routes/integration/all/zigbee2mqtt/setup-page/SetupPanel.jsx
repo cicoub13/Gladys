@@ -53,7 +53,7 @@ class SetupPanel extends Component {
   }
 
   render({ zigbee2mqttStatus = {}, httpClient, disabled, setupZigee2mqttStatus }, { setupMode, configuration }) {
-    const { dockerBased, networkModeValid, usbConfigured } = zigbee2mqttStatus;
+    const { dockerBased, networkModeValid, usbConfigured, needEzspFirmwareUpdate } = zigbee2mqttStatus;
 
     return (
       <Fragment>
@@ -74,6 +74,7 @@ class SetupPanel extends Component {
               setupZigee2mqttStatus={setupZigee2mqttStatus}
               configuration={configuration}
               httpClient={httpClient}
+              needEzspFirmwareUpdate={needEzspFirmwareUpdate}
               saveConfiguration={this.saveConfiguration}
               resetConfiguration={this.resetConfiguration}
               disabled={disabled}

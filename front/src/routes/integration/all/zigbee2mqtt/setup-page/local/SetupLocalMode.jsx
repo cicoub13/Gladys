@@ -34,20 +34,21 @@ class SetupLocalMode extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { setupZigee2mqttStatus } = nextProps;
+    const { setupZigee2mqttStatus, needEzspFirmwareUpdate } = nextProps;
 
     if (setupZigee2mqttStatus === RequestStatus.Success && setupZigee2mqttStatus !== this.props.setupZigee2mqttStatus) {
       this.setState({ editionMode: false });
     }
   }
 
-  render({ configuration, httpClient, disabled }, { editionMode }) {
+  render({ configuration, httpClient, disabled, needEzspFirmwareUpdate }, { editionMode }) {
     if (editionMode) {
       return (
         <SetupLocalOptions
           disabled={disabled}
           httpClient={httpClient}
           configuration={configuration}
+          needEzspFirmwareUpdate={needEzspFirmwareUpdate}
           saveConfiguration={this.saveConfiguration}
           resetConfiguration={this.resetConfiguration}
         />
@@ -55,7 +56,7 @@ class SetupLocalMode extends Component {
     }
 
     return (
-      <SetupLocalSummary disabled={disabled} configuration={configuration} enableEditionMode={this.enableEditionMode} />
+      <SetupLocalSummary disabled={disabled} configuration={configuration} enableEditionMode={this.enableEditionMode}/>
     );
   }
 }

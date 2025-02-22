@@ -71,8 +71,9 @@ class SetupLocalOptions extends Component {
     try {
       const zigbeeAdapterLabels = await this.props.httpClient.get('/api/v1/service/zigbee2mqtt/adapter');
       const zigbeeAdapters = zigbeeAdapterLabels.map(adapter => ({
-        label: adapter,
-        value: adapter
+        label: adapter.display_name,
+        value: adapter.name,
+        needsEzspMigration: adapter.needs_ezsp_migration
       }));
 
       this.setState({
@@ -87,6 +88,14 @@ class SetupLocalOptions extends Component {
     }
   };
 
+  computeMigrationNeeded = async () => {
+    // Find current adapter
+    const currentZigbeeAdapter = this.state.zigbeeAdapters.find(adapter => adapter.value == this.state.z2mDongleName)
+    this.setState({
+      ezspDongleNeedsMigration: currentZigbeeAdapter.needsEzspMigration
+    });
+  }
+
   buildSelectOption = value => {
     if (value) {
       return { label: value, value };
@@ -98,7 +107,7 @@ class SetupLocalOptions extends Component {
   constructor(props) {
     super(props);
 
-    const { configuration } = props;
+    const { configuration, needEzspFirmwareUpdate } = props;
     const { z2mDriverPath, z2mDongleName, z2mTcpPort } = configuration;
 
     this.state = {
@@ -109,18 +118,21 @@ class SetupLocalOptions extends Component {
       zigbeeAdapters: [],
       loadZigbeeAdaptersStatus: RequestStatus.Getting,
       z2mTcpPort,
-      mqttMode: MQTT_MODE.LOCAL
+      mqttMode: MQTT_MODE.LOCAL,
+      ezspDongleNeedsMigration: false,
+      needEzspFirmwareUpdate
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.loadUsbPorts();
-    this.loadZigbeeAdapters();
+    await this.loadZigbeeAdapters();
+    this.computeMigrationNeeded();
   }
 
   render(
     { disabled },
-    { z2mDriverPath, usbPorts, loadUsbPortsStatus, z2mDongleName, zigbeeAdapters, loadZigbeeAdaptersStatus, z2mTcpPort }
+    { z2mDriverPath, usbPorts, loadUsbPortsStatus, z2mDongleName, zigbeeAdapters, loadZigbeeAdaptersStatus, z2mTcpPort, ezspDongleNeedsMigration, needEzspFirmwareUpdate }
   ) {
     return (
       <div>
@@ -176,7 +188,16 @@ class SetupLocalOptions extends Component {
                 <i class="fe fe-refresh-cw" />
               </button>
             </div>
-          </div>
+          </div>      
+          {ezspDongleNeedsMigration && !needEzspFirmwareUpdate && (
+            <div class="alert alert-warning mt-4">
+              <h4 class="alert-title">Le driver ezsp n'est plus maintenu</h4>
+              <div class="text-secondary">
+                Le driver ezsp n'est plus maintenu. Nous pouvons mettre à jour le driver utilisé par Gladys vers le driver ember.
+                Pour effectuer cette mise à jour, veuillez suivre la documentation <a href="">ici</a>.
+              </div>
+            </div>
+          )}
         </div>
         <div class="form-group">
           <label class="form-label">
