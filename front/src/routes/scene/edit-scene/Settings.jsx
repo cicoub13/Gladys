@@ -98,6 +98,49 @@ class Settings extends Component {
                       />
                     </Localizer>
                   </div>
+                  <div class="form-group">
+                    <label class="form-label">
+                      <Text id="editScene.settingsModeTitle" />
+                    </label>
+                    <select
+                      onChange={props.updateSceneMode}
+                      class="form-control"
+                      value={props.scene.mode || 'parallel'}
+                    >
+                      <option value="parallel">
+                        <Text id="editScene.settingsModeParallel" />
+                      </option>
+                      <option value="single">
+                        <Text id="editScene.settingsModeSingle" />
+                      </option>
+                      <option value="restart">
+                        <Text id="editScene.settingsModeRestart" />
+                      </option>
+                    </select>
+                    <p class="mt-2">
+                      <small>
+                        <Text id="editScene.settingsModeHelp" class="markup" />
+                      </small>
+                    </p>
+                  </div>
+                  {props.scene.mode === 'parallel' && (
+                    <div class="form-group">
+                      <label class="form-label">
+                        <Text id="editScene.settingsMaxParallelTitle" />
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        value={props.scene.max_parallel || 10}
+                        min="1"
+                        max="100"
+                        onChange={props.updateSceneMaxParallel}
+                      />
+                      <span class="markup small">
+                        <Text id="editScene.settingsMaxParallelHelp" />
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div class="col">
                   <div class="form-group">

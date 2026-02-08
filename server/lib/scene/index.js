@@ -58,6 +58,8 @@ const SceneManager = function SceneManager(
   this.scheduler = scheduler;
   this.jobs = [];
   this.checkTriggersDurationTimer = new Map();
+  this.runningScenes = new Map(); // Map<sceneSelector, Set<executionId>>
+  this.executionAbortControllers = new Map(); // Map<executionId, abortFn>
   this.event.on(EVENTS.TRIGGERS.CHECK, eventFunctionWrapper(this.checkTrigger.bind(this)));
   this.event.on(EVENTS.ACTION.TRIGGERED, eventFunctionWrapper(this.executeSingleAction.bind(this)));
   // on timezone change, reload all scenes

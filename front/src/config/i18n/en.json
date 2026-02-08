@@ -2139,6 +2139,13 @@
   },
   "editScene": {
     "settings": "Settings",
+    "settingsModeTitle": "Execution Mode",
+    "settingsModeHelp": "Controls how this scene behaves when triggered while already running",
+    "settingsModeSingle": "Single - Don't run if already executing",
+    "settingsModeRestart": "Restart - Stop current execution and restart",
+    "settingsModeParallel": "Parallel - Allow multiple concurrent executions",
+    "settingsMaxParallelTitle": "Max Parallel Executions",
+    "settingsMaxParallelHelp": "Maximum number of concurrent executions allowed (1-100)",
     "nameTitle": "Scene name",
     "editNamePlaceholder": "Enter a scene name",
     "descriptionTitle": "Description",

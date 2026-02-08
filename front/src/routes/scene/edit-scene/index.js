@@ -815,6 +815,32 @@ class EditScene extends Component {
     });
   };
 
+  updateSceneMode = e => {
+    this.setState(prevState => {
+      const newState = update(prevState, {
+        scene: {
+          mode: {
+            $set: e.target.value
+          }
+        }
+      });
+      return newState;
+    });
+  };
+
+  updateSceneMaxParallel = e => {
+    this.setState(prevState => {
+      const newState = update(prevState, {
+        scene: {
+          max_parallel: {
+            $set: parseInt(e.target.value, 10)
+          }
+        }
+      });
+      return newState;
+    });
+  };
+
   duplicateScene = () => {
     route(`/dashboard/scene/${this.props.scene_selector}/duplicate`);
   };
@@ -1175,6 +1201,8 @@ class EditScene extends Component {
               duplicateScene={this.duplicateScene}
               setTags={this.setTags}
               updateSceneIcon={this.updateSceneIcon}
+              updateSceneMode={this.updateSceneMode}
+              updateSceneMaxParallel={this.updateSceneMaxParallel}
               addActionGroupAfter={this.addActionGroupAfter}
               askDeleteScene={askDeleteScene}
               askDeleteCurrentScene={this.askDeleteCurrentScene}

@@ -12,11 +12,17 @@ module.exports = (actionsFunc) => {
    * @param {string} path - The path of the action in the scene JSON.
    * @param {object} [options={}] - Additional options.
    * @param {boolean} [options.throwUnknownError=false] - Throw an error if an unknown error happens.
+   * @param {Function} [options.abortSignal] - Function to check if execution should be aborted.
    * @returns {Promise} Resolve if the action was executed with success.
    * @example
    * executeAction(this, action, {});
    */
-  async function executeAction(self, action, scope, path, { throwUnknownError = false } = {}) {
+  async function executeAction(self, action, scope, path, { throwUnknownError = false, abortSignal } = {}) {
+    // Check if execution was aborted
+    if (abortSignal && abortSignal()) {
+      throw new AbortScene('EXECUTION_ABORTED');
+    }
+
     logger.debug(`Executing action ${action.type}`);
     if (!actionsFunc[action.type]) {
       throw new Error(`Action type "${action.type}" does not exist.`);
@@ -62,17 +68,18 @@ module.exports = (actionsFunc) => {
    * @param {string} [basePath] - If this group of actions is executed inside a branch.
    * @param {object} [options] - Additional options.
    * @param {boolean} [options.throwUnknownError=false] - Throw an error if an unknown error happens.
+   * @param {Function} [options.abortSignal] - Function to check if execution should be aborted.
    * @returns {Promise} Resolve if the action was executed with success.
    * @example
    * executeActions(this, actions, {});
    */
-  async function executeActions(self, actions, scope, basePath = null, { throwUnknownError = false } = {}) {
+  async function executeActions(self, actions, scope, basePath = null, { throwUnknownError = false, abortSignal } = {}) {
     // first array level should be executed in serie
     await Promise.mapSeries(actions, async (parallelActions, columnIndex) => {
       // then, second level is executed in parallel
       await Promise.map(parallelActions, async (action, rowIndex) => {
         const path = `${basePath ? `${basePath}.` : ''}${columnIndex}.${rowIndex}`;
-        await executeAction(self, action, scope, path, { throwUnknownError });
+        await executeAction(self, action, scope, path, { throwUnknownError, abortSignal });
       });
     });
     return null;

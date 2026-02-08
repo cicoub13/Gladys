@@ -2139,6 +2139,13 @@
   },
   "editScene": {
     "settings": "Configuration",
+    "settingsModeTitle": "Mode d'exécution",
+    "settingsModeHelp": "Contrôle le comportement de cette scène lorsqu'elle est déclenchée pendant qu'elle s'exécute déjà",
+    "settingsModeSingle": "Simple - Ne pas exécuter si déjà en cours",
+    "settingsModeRestart": "Redémarrage - Arrêter l'exécution en cours et redémarrer",
+    "settingsModeParallel": "Parallèle - Autoriser plusieurs exécutions simultanées",
+    "settingsMaxParallelTitle": "Nombre max d'exécutions parallèles",
+    "settingsMaxParallelHelp": "Nombre maximum d'exécutions simultanées autorisées (1-100)",
     "nameTitle": "Nom de scène",
     "editNamePlaceholder": "Entrez un nom de scène",
     "descriptionTitle": "Description",

@@ -75,3 +75,8 @@
   z-index: -1;
   opacity: 0;
 }
+
+.explanationText {
+  font-size: 12px;
+  margin-bottom: .375rem;
+}

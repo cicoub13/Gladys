@@ -179,6 +179,23 @@ module.exports = (sequelize, DataTypes) => {
       last_executed: {
         type: DataTypes.DATE,
       },
+      mode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'parallel',
+        validate: {
+          isIn: [['single', 'restart', 'parallel']],
+        },
+      },
+      max_parallel: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 10,
+        validate: {
+          min: 1,
+          max: 100,
+        },
+      },
     },
     {},
   );
