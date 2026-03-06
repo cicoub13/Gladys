@@ -2925,6 +2925,11 @@
     "vacuumDatabaseButton": "Lancer le nettoyage",
     "vacuumDatabaseStarted": "Le nettoyage a commencé... Gladys sera indisponible jusqu'à la fin du nettoyage.",
     "vacuumDatabaseFinished": "Le nettoyage a terminé. Gladys est de nouveau disponible. Temps de nettoyage : {{duration}}.",
+    "rebootHostTitle": "Redémarrer la machine hôte",
+    "rebootHostDescription": "Cela va redémarrer la machine sur laquelle tourne Gladys. Tous les services seront temporairement indisponibles.",
+    "rebootHostButton": "Redémarrer la machine",
+    "rebootHostConfirm": "Confirmer le redémarrage",
+    "rebootHostTriggered": "Commande de redémarrage envoyée. La machine redémarre...",
     "containerState": {
       "created": "Créé",
       "restarting": "Redémarrage",

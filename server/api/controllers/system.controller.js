@@ -59,6 +59,19 @@ module.exports = function SystemController(gladys) {
   }
 
   /**
+   * @api {post} /api/v1/system/reboot
+   * @apiName rebootHost
+   * @apiGroup System
+   */
+  async function rebootHost(req, res) {
+    res.json({
+      success: true,
+      message: 'Host machine will reboot soon',
+    });
+    gladys.system.rebootHost();
+  }
+
+  /**
    * @api {post} /api/v1/system/vacuum
    * @apiName vacuumSystem
    * @apiGroup System
@@ -77,6 +90,7 @@ module.exports = function SystemController(gladys) {
     getDiskSpace: asyncMiddleware(getDiskSpace),
     getContainers: asyncMiddleware(getContainers),
     shutdown: asyncMiddleware(shutdown),
+    rebootHost: asyncMiddleware(rebootHost),
     vacuum: asyncMiddleware(vacuum),
   });
 };

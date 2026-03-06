@@ -2925,6 +2925,11 @@
     "vacuumDatabaseButton": "Datenbankreinigung starten",
     "vacuumDatabaseStarted": "Die Datenbankreinigung wurde gestartet. Gladys wird erst wieder verfügbar sein, wenn dieser Vorgang abgeschlossen ist.",
     "vacuumDatabaseFinished": "Die Datenbankreinigung wurde abgeschlossen. Gladys ist wieder verfügbar. Zeit für die Reinigung: {{duration}}.",
+    "rebootHostTitle": "Host-Maschine neu starten",
+    "rebootHostDescription": "Dadurch wird die Maschine neu gestartet, auf der Gladys läuft. Alle Dienste sind vorübergehend nicht verfügbar, bis die Maschine neu gestartet wurde.",
+    "rebootHostButton": "Host neu starten",
+    "rebootHostConfirm": "Neustart bestätigen",
+    "rebootHostTriggered": "Neustart-Befehl gesendet. Die Host-Maschine wird neu gestartet... Gladys ist wieder online, sobald die Maschine neu gestartet wurde.",
     "containerState": {
       "created": "Erstellt",
       "restarting": "Startet neu",
