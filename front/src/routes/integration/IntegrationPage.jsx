@@ -24,6 +24,9 @@ const IntegrationPage = ({
   refreshStoreStatus,
   refreshStoreStale,
   integrationsToUpdate,
+  showUpdateActions,
+  updateStatuses,
+  updateIntegration,
   installedIntegrationsCount,
   installedStatusCounts,
   installedInventoryKnown,
@@ -91,6 +94,9 @@ const IntegrationPage = ({
                       integration={integration}
                       toggleFavorite={toggleFavorite}
                       alwaysShowStatus={category === 'installed'}
+                      showUpdateAction={showUpdateActions}
+                      updateStatus={updateStatuses[integration.selector]}
+                      onUpdate={updateIntegration}
                     />
                   ))}
                 </div>
@@ -102,6 +108,9 @@ const IntegrationPage = ({
                         integration={integration}
                         toggleFavorite={toggleFavorite}
                         alwaysShowStatus={category === 'installed'}
+                        showUpdateAction={showUpdateActions}
+                        updateStatus={updateStatuses[integration.selector]}
+                        onUpdate={updateIntegration}
                       />
                     ))}
                   </div>

@@ -988,6 +988,13 @@
           "other": "{{count}} integraciones de la comunidad instaladas en esta instancia."
         }
       },
+      "updateCard": {
+        "button": "Actualizar",
+        "retry": "Reintentar",
+        "error": "La actualización ha fallado. Consulta los logs de la integración y vuelve a intentarlo.",
+        "updated": "Actualizada a la v{{version}}",
+        "upToDate": "Actualizada"
+      },
       "noSearchResults": "No se encontró ninguna integración que coincida con \"{{searchKeyword}}\".",
       "noSearchResultsSuggestion": "Es posible que su dispositivo sea compatible mediante una <a href=\"https://gladysassistant.com/docs/integrations/external/\" target=\"_blank\" rel=\"noopener noreferrer\">integración externa</a> de la comunidad, la forma recomendada de agregar nuevas compatibilidades. Y si aún no existe, ¡puede <a href=\"https://gladysassistant.com/docs/dev/external-integrations/\" target=\"_blank\" rel=\"noopener noreferrer\">crear fácilmente la suya</a>!",
       "refreshStore": {

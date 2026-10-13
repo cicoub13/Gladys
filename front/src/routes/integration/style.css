@@ -322,3 +322,35 @@
 :global(.glass-theme .card h4 a) {
   color: inherit;
 }
+
+/* in-place update from a catalog card (Installed / To update views) */
+.integrationUpdate {
+  margin-top: 0.75rem;
+}
+
+.integrationUpdateFooter .integrationUpdate {
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 40, 100, 0.08);
+}
+
+.integrationUpdateRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.integrationUpdateVersions {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.integrationUpdateButton {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.integrationListItem .integrationUpdate {
+  margin-top: 0.5rem;
+  margin-left: 60px;
+}

@@ -1,6 +1,7 @@
 import { Text, Localizer } from 'preact-i18n';
 import ScrollToTopLink from '../../components/router/ScrollToTopLink';
 import StatusBadge from './all/external-integration/components/StatusBadge';
+import IntegrationUpdateButton from './IntegrationUpdateButton';
 import { isNoteworthyExternalIntegrationStatus } from './all/external-integration/utils';
 import style from './style.css';
 
@@ -111,7 +112,14 @@ const IntegrationDescription = ({ integration }) =>
     <Text id={`integration.${integration.key}.description`} />
   );
 
-export const IntegrationListItem = ({ integration, toggleFavorite, alwaysShowStatus }) => (
+export const IntegrationListItem = ({
+  integration,
+  toggleFavorite,
+  alwaysShowStatus,
+  showUpdateAction,
+  updateStatus,
+  onUpdate
+}) => (
   <div class={`list-group-item ${style.integrationListItem}`}>
     <div class={style.integrationListRow}>
       <ScrollToTopLink href={integration.url}>
@@ -144,10 +152,20 @@ export const IntegrationListItem = ({ integration, toggleFavorite, alwaysShowSta
         <FavoriteButton integration={integration} toggleFavorite={toggleFavorite} />
       </div>
     </div>
+    {showUpdateAction && (
+      <IntegrationUpdateButton integration={integration} status={updateStatus} onUpdate={onUpdate} />
+    )}
   </div>
 );
 
-const IntegrationCategory = ({ integration, toggleFavorite, alwaysShowStatus }) => (
+const IntegrationCategory = ({
+  integration,
+  toggleFavorite,
+  alwaysShowStatus,
+  showUpdateAction,
+  updateStatus,
+  onUpdate
+}) => (
   <div class="col-sm-6 col-lg-4">
     <div class="card">
       <div class="card-img-container">
@@ -178,6 +196,13 @@ const IntegrationCategory = ({ integration, toggleFavorite, alwaysShowStatus }) 
           <IntegrationDescription integration={integration} />
         </div>
         <IntegrationTags integration={integration} alwaysShowStatus={alwaysShowStatus} />
+        {/* pushed to the bottom of the card: the buttons of a row line up
+            whatever the length of the descriptions above them */}
+        {showUpdateAction && (
+          <div class={`mt-auto ${style.integrationUpdateFooter}`}>
+            <IntegrationUpdateButton integration={integration} status={updateStatus} onUpdate={onUpdate} />
+          </div>
+        )}
       </div>
     </div>
   </div>

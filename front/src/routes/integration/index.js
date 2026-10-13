@@ -304,6 +304,11 @@ class Integration extends Component {
         url: getInstalledUrl(integration.selector, manifest),
         img: (storeIntegration && storeIntegration.cover_url) || manifest.cover_image || null,
         status: integration.status,
+        // the selector drives the in-place update from the card, the two
+        // versions are what its button shows ("v1.2.0 → v1.3.0")
+        selector: integration.selector,
+        version: integration.version || null,
+        latestVersion: integration.latest_version || null,
         updateAvailable: integration.update_available,
         categories: getCardCategories(manifest, storeIntegration),
         firstSeenAt: (storeIntegration && storeIntegration.first_seen_at) || null,
@@ -548,6 +553,30 @@ class Integration extends Component {
     return integrationsToUpdate;
   }
 
+  setUpdateStatus(selector, status) {
+    this.setState({ updateStatuses: { ...(this.state.updateStatuses || {}), [selector]: status } });
+  }
+
+  // same route as the "Update" button of the integration's own page: pulls the
+  // new image and recreates the container, without leaving the catalog
+  updateIntegration = async selector => {
+    const { user = {}, httpClient } = this.props;
+    if (user.role !== USER_ROLE.ADMIN || !selector) {
+      return;
+    }
+    this.setUpdateStatus(selector, RequestStatus.Getting);
+    try {
+      await httpClient.post(`/api/v1/external_integration/${selector}/update`);
+      this.setUpdateStatus(selector, RequestStatus.Success);
+    } catch (e) {
+      console.error(e);
+      this.setUpdateStatus(selector, RequestStatus.Error);
+    }
+    // reloading the installed list recomputes the card flags, the menu entry
+    // and the shared header counter in one go
+    await this.loadExternalIntegrations();
+  };
+
   toggleFavorite = async integrationKey => {
     const favorites = this.state.favorites || [];
     const newFavorites = favorites.includes(integrationKey)
@@ -613,12 +642,19 @@ class Integration extends Component {
     // the store catalog is only loaded for admins (and its refresh route is
     // admin-only), so only they get the refresh control
     const showStoreRefresh = user.role === USER_ROLE.ADMIN;
+    // updating is an admin act (the route is admin-only), offered from the
+    // views that are about what runs here: the inventory and the update list
+    const showUpdateActions =
+      user.role === USER_ROLE.ADMIN && (props.category === 'installed' || props.category === 'updates');
     // Combine props and state for the IntegrationPage
     const combinedProps = {
       ...props,
       ...state,
       showInstallFromGithub,
       showStoreRefresh,
+      showUpdateActions,
+      updateStatuses: state.updateStatuses || {},
+      updateIntegration: this.updateIntegration,
       search: this.search,
       changeOrderDir: this.changeOrderDir,
       toggleFavorite: this.toggleFavorite,

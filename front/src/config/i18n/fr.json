@@ -988,6 +988,13 @@
           "other": "{{count}} intégrations de la communauté installées sur cette instance."
         }
       },
+      "updateCard": {
+        "button": "Mettre à jour",
+        "retry": "Réessayer",
+        "error": "La mise à jour a échoué. Consultez les logs de l'intégration, puis réessayez.",
+        "updated": "Mise à jour en v{{version}} effectuée",
+        "upToDate": "À jour"
+      },
       "noSearchResults": "Aucune intégration correspondant à « {{searchKeyword}} » n'a été trouvée.",
       "noSearchResultsSuggestion": "Votre appareil est peut-être pris en charge par une <a href=\"https://gladysassistant.com/fr/docs/integrations/external/\" target=\"_blank\" rel=\"noopener noreferrer\">intégration externe</a> de la communauté : c'est la façon recommandée d'ajouter de nouvelles compatibilités. Et si elle n'existe pas encore, vous pouvez <a href=\"https://gladysassistant.com/fr/docs/dev/external-integrations/\" target=\"_blank\" rel=\"noopener noreferrer\">créer la vôtre très simplement</a> !",
       "refreshStore": {
