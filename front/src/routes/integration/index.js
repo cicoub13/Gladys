@@ -548,6 +548,39 @@ class Integration extends Component {
     return integrationsToUpdate;
   }
 
+  // "Update all" of the inventory: every installed community integration with
+  // a newer version in the store, through the same route as the "Update"
+  // button of its own page. One after the other and not in parallel: each
+  // update pulls a Docker image and recreates a container, running them all at
+  // once would hammer a small box (and the network) for no real gain. A failure
+  // does not stop the others: it is listed in the summary at the end
+  updateAllIntegrations = async () => {
+    const { user = {}, httpClient } = this.props;
+    if (user.role !== USER_ROLE.ADMIN || this.state.bulkUpdate) {
+      return;
+    }
+    const toUpdate = (this.state.externalInstalled || []).filter(integration => integration.update_available);
+    if (toUpdate.length === 0) {
+      return;
+    }
+    const failures = [];
+    for (let index = 0; index < toUpdate.length; index += 1) {
+      const integration = toUpdate[index];
+      const name = get(integration, 'manifest.name') || integration.name || integration.selector;
+      await this.setState({ bulkUpdate: { current: index + 1, total: toUpdate.length, name } });
+      try {
+        await httpClient.post(`/api/v1/external_integration/${integration.selector}/update`);
+      } catch (e) {
+        console.error(e);
+        failures.push({ selector: integration.selector, name });
+      }
+    }
+    await this.setState({ bulkUpdate: null, bulkUpdateResult: { total: toUpdate.length, failures } });
+    // reloading the installed list recomputes the card flags, the menu entry
+    // and the shared header counter in one go
+    await this.loadExternalIntegrations();
+  };
+
   toggleFavorite = async integrationKey => {
     const favorites = this.state.favorites || [];
     const newFavorites = favorites.includes(integrationKey)
@@ -613,12 +646,18 @@ class Integration extends Component {
     // the store catalog is only loaded for admins (and its refresh route is
     // admin-only), so only they get the refresh control
     const showStoreRefresh = user.role === USER_ROLE.ADMIN;
+    // updating is an admin act (the route is admin-only), offered from the
+    // views that are about what runs here: the inventory and the update list
+    const showUpdateAll =
+      user.role === USER_ROLE.ADMIN && (props.category === 'installed' || props.category === 'updates');
     // Combine props and state for the IntegrationPage
     const combinedProps = {
       ...props,
       ...state,
       showInstallFromGithub,
       showStoreRefresh,
+      showUpdateAll,
+      updateAllIntegrations: this.updateAllIntegrations,
       search: this.search,
       changeOrderDir: this.changeOrderDir,
       toggleFavorite: this.toggleFavorite,

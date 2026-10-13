@@ -322,3 +322,62 @@
 :global(.glass-theme .card h4 a) {
   color: inherit;
 }
+
+/* "Update all" banner of the Installed / To update views */
+.updateAllBar {
+  border-left: 4px solid #467fcf;
+}
+
+.updateAllBody {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.updateAllIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: #467fcf;
+  background-color: rgba(70, 127, 207, 0.12);
+  flex-shrink: 0;
+}
+
+.updateAllText {
+  flex: 1;
+  min-width: 180px;
+}
+
+.updateAllButton {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.updateAllCount {
+  color: inherit;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.updateAllSpinner {
+  flex-shrink: 0;
+  animation: updateAllSpin 1s linear infinite;
+}
+
+@keyframes updateAllSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 575px) {
+  .updateAllButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

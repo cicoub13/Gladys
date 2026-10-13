@@ -5,6 +5,7 @@ import IntegrationFacets from './IntegrationFacets';
 import IntegrationGatewayBanner from './IntegrationGatewayBanner';
 import IntegrationPageHeader from './IntegrationPageHeader';
 import InstalledIntegrationsSummary from './InstalledIntegrationsSummary';
+import UpdateAllIntegrationsBar from './UpdateAllIntegrationsBar';
 import StoreRefreshFooter from './all/external-integration/store-refresh/StoreRefreshFooter';
 import style from './style.css';
 
@@ -24,6 +25,10 @@ const IntegrationPage = ({
   refreshStoreStatus,
   refreshStoreStale,
   integrationsToUpdate,
+  showUpdateAll,
+  updateAllIntegrations,
+  bulkUpdate,
+  bulkUpdateResult,
   installedIntegrationsCount,
   installedStatusCounts,
   installedInventoryKnown,
@@ -82,6 +87,14 @@ const IntegrationPage = ({
                   <InstalledIntegrationsSummary
                     installedIntegrationsCount={installedIntegrationsCount}
                     installedStatusCounts={installedStatusCounts}
+                  />
+                )}
+                {showUpdateAll && (
+                  <UpdateAllIntegrationsBar
+                    integrationsToUpdate={integrationsToUpdate}
+                    bulkUpdate={bulkUpdate}
+                    bulkUpdateResult={bulkUpdateResult}
+                    onUpdateAll={updateAllIntegrations}
                   />
                 )}
                 <div class={`list-group list-group-flush ${style.mobileList}`}>
