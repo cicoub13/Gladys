@@ -48,6 +48,9 @@ async function disconnectContainers() {
   this.mqttConnectionError = null;
   clearTimeout(this.healthCheckTimer);
   this.healthCheckTimer = null;
+  // Disabled, Zigbee2mqtt is not started again when its dongle comes back
+  this.stopWatchingDongle();
+  this.dongleMissing = false;
   this.emitStatusEvent();
 
   // Disabled: the outcome of the last installation no longer describes Zigbee2mqtt
