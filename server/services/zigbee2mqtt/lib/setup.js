@@ -10,6 +10,7 @@ const {
   INSTALLATION_ERROR,
 } = require('./constants');
 const { validateSetup } = require('../utils/validateSetup');
+const { isConfigured } = require('../utils/isConfigured');
 
 /**
  * @description Get the coordinator a configuration points Zigbee2mqtt to: the URL of a network coordinator, or the port
@@ -95,6 +96,11 @@ async function setup(config) {
     this.finishInstallation(e);
     throw e;
   }
+  this.configured = isConfigured({
+    z2mDriverPath: getSavedValue(CONFIGURATION.Z2M_DRIVER_PATH, z2mDriverPath),
+    z2mNetworkAdapterUrl: getSavedValue(CONFIGURATION.Z2M_NETWORK_ADAPTER_URL, z2mNetworkAdapterUrl),
+    mqttMode: getSavedValue(CONFIGURATION.Z2M_MQTT_MODE, mqttMode),
+  });
 
   const { installation } = this;
   // Reload z2m container with new coordinator configuration, without waiting for it
